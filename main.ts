@@ -1,7 +1,5 @@
 // ############################################
-const startY = 0
 const numLeds = 10
-const ledOverflow = true
 
 const flashColor = NeoPixelColors.Violet
 const stripColor = NeoPixelColors.Yellow
@@ -24,7 +22,7 @@ for (let i = 0; i < 3; i++) {
 const findRange = (n: number) => {
     for (let i = 0; i < steps.length; i++) {
         const step = steps[i]
-        if (n <= step) {
+        if (n < step) {
             return i
         }
     }
@@ -34,8 +32,9 @@ const findRange = (n: number) => {
 
 basic.forever(() => {
     const temp = Math.floor(input.temperature())
+    let step = findRange(temp)
     strip.clear()
-    strip.setPixelColor(findRange(temp), stripColor)
+    strip.setPixelColor(step, stripColor)
     strip.show()
 })
 
