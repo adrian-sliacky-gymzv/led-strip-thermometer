@@ -6,7 +6,7 @@ const numberOfLeds = 10
 const fromNum = 10
 const toNum = 30
 
-let steps = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30] // only used when useStepsGenerator is false
+let steps = [12, 14, 16, 18, 20, 22, 24, 26, 28] // only used when useStepsGenerator is false
 
 // flash on the start of the program
 const flash = false
@@ -23,17 +23,16 @@ const flashDelay = 190 // delay in ms
 if (useStepsGenerator) {
     steps = []
     let i = fromNum
-    const increment = (toNum - fromNum) / numberOfLeds
+    const increment = (toNum - fromNum) / (numberOfLeds - 2)
 
-    while (i < toNum) {
-        steps.push(i)
-        i += increment
+    for (let i = 0; i < numberOfLeds - 1; i++) {
+        steps.push(fromNum + (increment * i))
     }
 }
 
 // #######
 
-const numLeds = steps.length
+const numLeds = steps.length + 1
 
 const strip = neopixel.create(DigitalPin.P0, numLeds, NeoPixelMode.RGB)
 
@@ -56,6 +55,10 @@ const findRange = (n: number) => {
     }
     return numLeds - 1
 }
+
+input.onButtonPressed(Button.A, () => {
+    basic.showNumber(input.temperature())
+})
 
 basic.forever(() => {
     const temp = input.temperature()
