@@ -1,12 +1,37 @@
 // ############################################
-const steps = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
 
+// steps generator
+const useStepsGenerator = true
+const numberOfLeds = 10
+const fromNum = 10
+const toNum = 30
+
+let steps = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30] // only used when useStepsGenerator is false
+
+// flash on the start of the program
 const flash = false
 const numberOfFlashes = 3
 const flashColor = NeoPixelColors.Violet
 const flashDelay = 190 // delay in ms
 
 // ############################################
+
+// #######
+
+// steps generator
+
+if (useStepsGenerator) {
+    steps = []
+    let i = fromNum
+    const increment = (toNum - fromNum) / numberOfLeds
+
+    while (i < toNum) {
+        steps.push(i)
+        i += increment
+    }
+}
+
+// #######
 
 const numLeds = steps.length
 
@@ -33,7 +58,7 @@ const findRange = (n: number) => {
 }
 
 basic.forever(() => {
-    const temp = Math.floor(input.temperature())
+    const temp = input.temperature()
     const step = findRange(temp)
 
     const stripRGB = [Math.round(((255 / numLeds)) * step), 0, (255 - (step * (255 / numLeds)))]
