@@ -1,7 +1,7 @@
 // ############################################
 const steps = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
 
-const flash = true
+const flash = false
 const numberOfFlashes = 3
 const flashColor = NeoPixelColors.Violet
 const flashDelay = 190 // delay in ms
